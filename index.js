@@ -1,6 +1,9 @@
 const uuidv4 = require('uuid/v4')
 const Redis = require('ioredis')
 const hash = require('./modules/hash')
+const wxLogin = require('./modules/wx-login')
+const mpLogin = require('./modules/mp-login')
+const qqLogin = require('./modules/qq-login')
 
 let RedisInstances = {}
 let KnexInstances = {}
@@ -98,6 +101,38 @@ class Luban {
           })
         })
       }
+    }
+  }
+
+  async login(data, lubanAppId, platform = 'wx') {
+    let luban = this
+    switch (platform) {
+      // 微信小程序
+      case 'wx':
+        return await wxLogin({
+          code: data,
+          appid: lubanAppId,
+          luban
+        })
+
+      // 微信公众号
+      case 'mp':
+        return await mpLogin({
+          code: data,
+          appid: lubanAppId,
+          luban
+        })
+
+      // QQ小程序
+      case 'qq':
+        return await qqLogin({
+          code: data,
+          appid: lubanAppId,
+          luban
+        })
+
+      default:
+        break
     }
   }
 
