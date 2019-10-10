@@ -84,13 +84,42 @@ return lb.utils.resp(data, statusCode, headers, isBase64Encoded)
 > 获取js签名信息（公众号）
 
 ```javascript
-let sessionInfo = await lb.utils.getSessionInfo(event)
-let accessToken = await lb.utils.getAccessToken(event)
-let signInfo = await lb.utils.getSignInfo(event)
+let sessionInfo = await lb.utils.getSessionInfo(lubanAppId, lubanSessionKey)
+let accessToken = await lb.utils.getAccessToken(lubanAppId, platform)
+let signInfo = await lb.utils.getSignInfo(lubanAppId)
 ```
 |参数名|类型|默认值|说明|
 |:-----|:-----|:-----|:-----|
-|event|Object|`arguments[0]`|把`main_handler`里面的第一个参数`event`传进来即可|
+|lubanAppId|String||鲁班AppId|
+|lubanSessionKey|String||鲁班SessionKey|
+|platform|String|'wx'|wx=微信小程序，mp=微信公众号，qq=qq小程序|
+
+### login
+
+> 服务端统一登录接口
+
+```javascript
+let loginInfo = await lb.login(data, lubanAppId, platform)
+```
+|参数名|类型|默认值|说明|
+|:-----|:-----|:-----|:-----|
+|data|Object||登录所需的数据|
+|lubanAppId|String||鲁班AppId|
+|platform|String|'wx'|wx=微信小程序，mp=微信公众号，qq=qq小程序|
+
+
+### handleUserInfo
+
+> 服务端统一处理用户信息接口（小程序）
+
+```javascript
+let userInfo = await lb.handleUserInfo(data, lubanAppId, platform)
+```
+|参数名|类型|默认值|说明|
+|:-----|:-----|:-----|:-----|
+|data|Object||登录所需的数据|
+|lubanAppId|String||鲁班AppId|
+|platform|String|'wx'|wx=微信小程序，qq=qq小程序|
 
 ### db
 
