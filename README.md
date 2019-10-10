@@ -64,6 +64,7 @@ const lb = new Luban({
 ```javascript
 return lb.utils.resp(data, statusCode, headers, isBase64Encoded)
 ```
+
 |参数名|类型|默认值|说明|
 |:-----|:-----|:-----|:-----|
 |data|Any|null|返回给请求方的数据|
@@ -86,13 +87,15 @@ return lb.utils.resp(data, statusCode, headers, isBase64Encoded)
 ```javascript
 let sessionInfo = await lb.utils.getSessionInfo(lubanAppId, lubanSessionKey)
 let accessToken = await lb.utils.getAccessToken(lubanAppId, platform)
-let signInfo = await lb.utils.getSignInfo(lubanAppId)
+let signInfo = await lb.utils.getSignInfo(lubanAppId, weburl)
 ```
+
 |参数名|类型|默认值|说明|
 |:-----|:-----|:-----|:-----|
 |lubanAppId|String||鲁班AppId|
 |lubanSessionKey|String||鲁班SessionKey|
 |platform|String|wx|wx=微信小程序，mp=微信公众号，qq=qq小程序|
+|weburl|String||要获取签名的网页url|
 
 ### login
 
@@ -101,12 +104,12 @@ let signInfo = await lb.utils.getSignInfo(lubanAppId)
 ```javascript
 let loginInfo = await lb.login(data, lubanAppId, platform)
 ```
+
 |参数名|类型|默认值|说明|
 |:-----|:-----|:-----|:-----|
 |data|Object||登录所需的数据|
 |lubanAppId|String||鲁班AppId|
 |platform|String|wx|wx=微信小程序，mp=微信公众号，qq=qq小程序|
-
 
 ### handleUserInfo
 
@@ -115,6 +118,7 @@ let loginInfo = await lb.login(data, lubanAppId, platform)
 ```javascript
 let userInfo = await lb.handleUserInfo(data, lubanAppId, platform)
 ```
+
 |参数名|类型|默认值|说明|
 |:-----|:-----|:-----|:-----|
 |data|Object||登录所需的数据|
