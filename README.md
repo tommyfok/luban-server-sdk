@@ -53,3 +53,40 @@ let signInfo = await lb.utils.getSignInfo(event)
 |参数名|类型|默认值|说明|
 |:-----|:-----|:-----|:-----|
 |event|Object|`arguments[0]`|把`main_handler`里面的第一个参数`event`传进来即可|
+
+### db
+
+```javascript
+// 1. 引用一个knex实例，其中aa是config中的连接名
+let data = await lb.db.aa('table_name').select()
+
+// 2. sys是一个固定连接名，用来获取系统db连接实例
+// 例子：根据appid获取app信息
+let app = (await lb.db.sys('app').where('appid', event.queryString.appid))[0]
+```
+
+### cache
+
+#### get
+
+> 通过一个key获取缓存数据
+
+```javascript
+let data = await lb.cache.get('KEY')
+```
+
+#### set
+
+> 写入缓存
+
+```javascript
+await lb.cache.set('KEY', 'VALUE')
+```
+
+#### setEx
+
+> 写入定时过期缓存
+
+```javascript
+await lb.cache.setEx('KEY', 'VALUE', 30) // 30秒自动过期
+```
