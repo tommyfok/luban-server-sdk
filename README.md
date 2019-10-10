@@ -92,7 +92,7 @@ let signInfo = await lb.utils.getSignInfo(lubanAppId)
 |:-----|:-----|:-----|:-----|
 |lubanAppId|String||鲁班AppId|
 |lubanSessionKey|String||鲁班SessionKey|
-|platform|String|'wx'|wx=微信小程序，mp=微信公众号，qq=qq小程序|
+|platform|String|wx|wx=微信小程序，mp=微信公众号，qq=qq小程序|
 
 ### login
 
@@ -105,7 +105,7 @@ let loginInfo = await lb.login(data, lubanAppId, platform)
 |:-----|:-----|:-----|:-----|
 |data|Object||登录所需的数据|
 |lubanAppId|String||鲁班AppId|
-|platform|String|'wx'|wx=微信小程序，mp=微信公众号，qq=qq小程序|
+|platform|String|wx|wx=微信小程序，mp=微信公众号，qq=qq小程序|
 
 
 ### handleUserInfo
@@ -119,7 +119,7 @@ let userInfo = await lb.handleUserInfo(data, lubanAppId, platform)
 |:-----|:-----|:-----|:-----|
 |data|Object||登录所需的数据|
 |lubanAppId|String||鲁班AppId|
-|platform|String|'wx'|wx=微信小程序，qq=qq小程序|
+|platform|String|wx|wx=微信小程序，qq=qq小程序|
 
 ### db
 
@@ -161,3 +161,5 @@ await lb.cache.setEx('KEY', 'VALUE', 30) // 30秒自动过期
 ### cos
 
 > 腾讯云对象存储操作
+
+### upload
