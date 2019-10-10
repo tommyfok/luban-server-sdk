@@ -162,4 +162,4 @@ await lb.cache.setEx('KEY', 'VALUE', 30) // 30秒自动过期
 
 > 腾讯云对象存储操作
 
-### upload
+#### upload
