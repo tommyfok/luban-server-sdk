@@ -12,7 +12,45 @@
 
 ```javascript
 const Luban = require('luban-server-sdk')
-const lb = new Luban(config)
+const lb = new Luban({
+  sysdb: {
+    host: '',
+    port: '',
+    username: '',
+    password: '',
+    database: ''
+  },
+  conns: [{
+    name: '',
+    host: '',
+    port: '',
+    username: '',
+    password: '',
+    database: ''
+  }],
+  redis: {
+    host: '',
+    port: 6379,
+    password: ''
+  },
+  lubanConfig: {
+    // 公众号
+    mpAppId: '',
+    mpAppSecret: '',
+    // 微信小程序
+    wxAppId: '',
+    wxAppSecret: '',
+    // qq小程序
+    qqAppId: '',
+    qqAppSecret: ''
+  },
+  qcloud: {
+    appId: '',
+    secretId: '',
+    secretKey: ''
+  },
+  cos: {}
+})
 ```
 
 ## instance api
