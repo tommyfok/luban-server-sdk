@@ -19,7 +19,7 @@ const lb = new Luban(config)
 
 ### utils
 
-#### resp
+#### resp 返回数据给请求方
 
 ```javascript
 return lb.utils.resp(data, statusCode, headers, isBase64Encoded)
