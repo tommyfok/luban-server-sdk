@@ -128,3 +128,7 @@ await lb.cache.set('KEY', 'VALUE')
 ```javascript
 await lb.cache.setEx('KEY', 'VALUE', 30) // 30秒自动过期
 ```
+
+### cos
+
+> 腾讯云对象存储操作
