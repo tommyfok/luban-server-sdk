@@ -19,7 +19,9 @@ const lb = new Luban(config)
 
 ### utils
 
-#### resp 返回数据给请求方
+#### resp
+
+> 构造腾讯云函数的返回体
 
 ```javascript
 return lb.utils.resp(data, statusCode, headers, isBase64Encoded)
@@ -31,9 +33,17 @@ return lb.utils.resp(data, statusCode, headers, isBase64Encoded)
 |headers|Object|{}|返回头|
 |isBase64Encoded|Boolean|false|是否base64编码（例如要返回图片，data就是图片的base64编码字符串，isBase64Encoded要设置为true）|
 
-#### getSessionInfo 获取session信息
-#### getAccessToken 获取access_token（公众号、小程序）
-#### getSignInfo 获取js签名信息（公众号）
+#### getSessionInfo
+
+> 获取session信息
+
+#### getAccessToken
+
+> 获取access_token（公众号、小程序）
+
+#### getSignInfo
+
+> 获取js签名信息（公众号）
 
 ```javascript
 let sessionInfo = await lb.utils.getSessionInfo(event)
