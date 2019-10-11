@@ -34,74 +34,31 @@ class Luban {
     })
     this.db = {}
     config.conns.forEach(conn => {
-      let id = hash(JSON.stringify(conn))
-      KnexInstances[id] = KnexInstances[id] || Knex({
-        client: conn.client || 'mysql',
-        connection: {
-          database: conn.database,
-          host: conn.host,
-          port: conn.port,
-          user: conn.username,
-          password: conn.password,
-          charset: conn.charset || 'utf8mb4'
-        },
-        pool: {
-          min: conn.poolMin || 1,
-          max: conn.poolMax || 20
-        }
-      })
-      this.db[conn.name] = KnexInstances[id]
+      if (conn.name && !(conn.name in this.db)) {
+        let id = hash(JSON.stringify(conn))
+        KnexInstances[id] = KnexInstances[id] || Knex({
+          client: conn.client || 'mysql',
+          connection: {
+            database: conn.database,
+            host: conn.host,
+            port: conn.port,
+            user: conn.username,
+            password: conn.password,
+            charset: conn.charset || 'utf8mb4'
+          },
+          pool: {
+            min: conn.poolMin || 1,
+            max: conn.poolMax || 20
+          }
+        })
+        this.db[conn.name] = KnexInstances[id]
+      }
     })
     this.db.sys = KnexInstances[this.id]
     this.utils = require('./modules/utils')(this)
     let redisInst = RedisInstances[this.id]
     this.redis = redisInst
-    this.cache = {
-      get(key) {
-        return new Promise((resolve, reject) => {
-          redisInst.get(key, (err, result) => {
-            if (err) {
-              console.log('asyncGet failed', key, err)
-              reject(err)
-            } else {
-              let _result = result
-              if (typeof result === 'string') {
-                try {
-                  _result = JSON.parse(result)
-                } catch (e) {}
-              }
-              resolve(_result)
-            }
-          })
-        })
-      },
-      set(key, value) {
-        let _value = typeof value === 'string' ? value : JSON.stringify(value)
-        return new Promise((resolve, reject) => {
-          redisInst.set(key, _value, (err, result) => {
-            if (err) {
-              console.log('set cache failed', key, value, err)
-              reject(err)
-            } else {
-              resolve(result)
-            }
-          })
-        })
-      },
-      setEx(key, value, timeout = 7190) {
-        let _value = typeof value === 'string' ? value : JSON.stringify(value)
-        return new Promise((resolve, reject) => {
-          redisInst.set(key, _value, 'EX', timeout, (err, result) => {
-            if (err) {
-              console.log('setEx failed', key, value, err)
-              reject(err)
-            } else {
-              resolve(result)
-            }
-          })
-        })
-      }
-    }
+    this.cache = require('./modules/simple-cache')(redisInst)
   }
 
   async login(data, lubanAppId, platform = 'wx') {
@@ -132,7 +89,9 @@ class Luban {
         })
 
       default:
-        break
+        return this.utils.resp({
+          success: false
+        }, 400)
     }
   }
 

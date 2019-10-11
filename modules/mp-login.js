@@ -1,4 +1,5 @@
 const uuidv4 = require('uuid/v4')
+const assert = require('assert')
 
 module.exports = async ({
   code,
@@ -10,13 +11,12 @@ module.exports = async ({
   let appInfo = await luban._getApp(appid)
   let lubanConfig = appInfo.config_data.lubanConfig
   assert.ok(appInfo, 'cannot find app')
-  appInfo.config_data = JSON.parse(appInfo.config_data)
   let wxAppId = lubanConfig.mpAppId
   let wxAppSecret = lubanConfig.mpAppSecret
   assert.ok(wxAppId, 'mpAppId required')
   assert.ok(wxAppSecret, 'mpAppSecret required')
 
-  // 获取access_token
+  // 获取登录用的access_token（网页授权access_token，不同普通access_token）
   let url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${wxAppId}&secret=${wxAppSecret}&code=${code}&grant_type=authorization_code`
   let sessionData = (await axios(url)).data
   if (sessionData.errcode) {
