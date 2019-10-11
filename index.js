@@ -1,5 +1,6 @@
 const uuidv4 = require('uuid/v4')
 const Redis = require('ioredis')
+const Knex = require('knex')
 const hash = require('./modules/hash')
 const wxLogin = require('./modules/wx-login')
 const mpLogin = require('./modules/mp-login')
@@ -14,24 +15,26 @@ let Apps = {}
 class Luban {
   constructor(config) {
     this.id = uuidv4()
+    let sysdbConfig = config.sysdb
+    let redisConfig = config.redis
     RedisInstances[this.id] = new Redis({
-      host: config.redis.host,
-      port: config.redis.port || 6379,
-      password: config.redis.password
+      host: redisConfig.host,
+      port: redisConfig.port || 6379,
+      password: redisConfig.password
     })
     KnexInstances[this.id] = KnexInstances[this.id] || Knex({
-      client: config.sysdb.client || 'mysql',
+      client: sysdbConfig.client || 'mysql',
       connection: {
-        database: config.sysdb.database,
-        host: config.sysdb.host,
-        port: config.sysdb.port,
-        user: config.sysdb.username,
-        password: config.sysdb.password,
-        charset: config.sysdb.charset || 'utf8mb4'
+        database: sysdbConfig.database,
+        host: sysdbConfig.host,
+        port: sysdbConfig.port,
+        user: sysdbConfig.username,
+        password: sysdbConfig.password,
+        charset: sysdbConfig.charset || 'utf8mb4'
       },
       pool: {
-        min: config.sysdb.poolMin || 1,
-        max: config.sysdb.poolMax || 20
+        min: sysdbConfig.poolMin || 1,
+        max: sysdbConfig.poolMax || 20
       }
     })
     this.db = {}
