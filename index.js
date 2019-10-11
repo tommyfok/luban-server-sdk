@@ -6,7 +6,6 @@ const mpLogin = require('./modules/mp-login')
 const qqLogin = require('./modules/qq-login')
 const wxHandleUserInfo = require('./modules/wx-handle-user-info')
 const qqHandleUserInfo = require('./modules/qq-handle-user-info')
-const qqLogin = require('./modules/qq-login')
 
 let RedisInstances = {}
 let KnexInstances = {}
