@@ -4,6 +4,9 @@ const hash = require('./modules/hash')
 const wxLogin = require('./modules/wx-login')
 const mpLogin = require('./modules/mp-login')
 const qqLogin = require('./modules/qq-login')
+const wxHandleUserInfo = require('./modules/wx-handle-user-info')
+const qqHandleUserInfo = require('./modules/qq-handle-user-info')
+const qqLogin = require('./modules/qq-login')
 
 let RedisInstances = {}
 let KnexInstances = {}
@@ -64,7 +67,6 @@ class Luban {
   async login(data, lubanAppId, platform = 'wx') {
     let luban = this
     switch (platform) {
-      // 微信小程序
       case 'wx':
         return await wxLogin({
           code: data,
@@ -72,7 +74,6 @@ class Luban {
           luban
         })
 
-      // 微信公众号
       case 'mp':
         return await mpLogin({
           code: data,
@@ -80,7 +81,6 @@ class Luban {
           luban
         })
 
-      // QQ小程序
       case 'qq':
         return await qqLogin({
           code: data,
@@ -88,6 +88,37 @@ class Luban {
           luban
         })
 
+      default:
+        return this.utils.resp({
+          success: false
+        }, 400)
+    }
+  }
+
+  async handleUserInfo({
+    encryptedData,
+    iv,
+    lubanAppId,
+    lubanSessionKey,
+    platform = 'wx'
+  }) {
+    switch (platform) {
+      case 'wx':
+        return await wxHandleUserInfo({
+          luban: this,
+          encryptedData,
+          iv,
+          lubanAppId,
+          lubanSessionKey
+        })
+      case 'qq':
+        return await qqHandleUserInfo({
+          luban: this,
+          encryptedData,
+          iv,
+          lubanAppId,
+          lubanSessionKey
+        })
       default:
         return this.utils.resp({
           success: false

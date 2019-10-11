@@ -116,13 +116,21 @@ let loginInfo = await lb.login(data, lubanAppId, platform)
 > 服务端统一处理用户信息接口（小程序）
 
 ```javascript
-let userInfo = await lb.handleUserInfo(data, lubanAppId, platform)
+let userInfo = await lb.handleUserInfo({
+  encryptedData,
+  iv,
+  lubanAppId,
+  lubanSessionKey,
+  platform
+})
 ```
 
 |参数名|类型|默认值|说明|
 |:-----|:-----|:-----|:-----|
-|data|Object||登录所需的数据|
+|encryptedData|String||用户信息加密串|
+|iv|String||加密向量|
 |lubanAppId|String||鲁班AppId|
+|lubanSessionKey|String||用户sessionkey|
 |platform|String|wx|wx=微信小程序，qq=qq小程序|
 
 ### db
