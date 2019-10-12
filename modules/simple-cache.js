@@ -4,7 +4,7 @@ module.exports = function (redisInst) {
       return new Promise((resolve, reject) => {
         redisInst.get(key, (err, result) => {
           if (err) {
-            console.log('asyncGet failed', key, err)
+            console.log('get cache failed', key, err)
             reject(err)
           } else {
             let _result = result
@@ -36,7 +36,7 @@ module.exports = function (redisInst) {
       return new Promise((resolve, reject) => {
         redisInst.set(key, _value, 'EX', timeout, (err, result) => {
           if (err) {
-            console.log('setEx failed', key, value, err)
+            console.log('set ex-cahce failed', key, value, err)
             reject(err)
           } else {
             resolve(result)
