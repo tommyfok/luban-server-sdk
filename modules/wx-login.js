@@ -35,7 +35,7 @@ module.exports = async function ({
     let userKey = `${wxAppId}_luban_${data.openid}`
     try {
       // 首先从redis里面查用户信息
-      data.user = JSON.parse(await asyncGet(userKey))
+      data.user = JSON.parse(await luban.cache.get(userKey))
     } catch (e) {}
     if (!data.user) {
       // redis里面没有数据，从db里面查
