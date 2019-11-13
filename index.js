@@ -15,8 +15,8 @@ let Apps = {}
 class Luban {
   constructor(config) {
     this.id = uuidv4()
-    let sysdbConfig = config.sysdb
-    let redisConfig = config.redis
+    let sysdbConfig = config.sysdb || {}
+    let redisConfig = config.redis || {}
     RedisInstances[this.id] = new Redis({
       host: redisConfig.host,
       port: redisConfig.port || 6379,
@@ -38,6 +38,7 @@ class Luban {
       }
     })
     this.db = {}
+    config.conns = config.conns || []
     config.conns.forEach(conn => {
       if (conn.name && !(conn.name in this.db)) {
         let id = hash(JSON.stringify(conn))

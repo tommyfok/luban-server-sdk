@@ -1,6 +1,6 @@
 {
   "name": "luban-server-sdk",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "> 把鲁班云函数用到的方法封装成组件，方便调用",
   "main": "index.js",
   "scripts": {
