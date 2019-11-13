@@ -17,7 +17,7 @@ module.exports = async function ({
   // 获取sessionkey进行解密
   let userSessionRedisKey = [lubanAppId, lubanSessionKey].join('-')
   let userWxSessKey, sessData, wxAppId
-  sessData = JSON.parse(await luban.cache.get(userSessionRedisKey))
+  sessData = await luban.cache.get(userSessionRedisKey)
   userWxSessKey = sessData.session_key
   wxAppId = sessData.wx_appid
   if (!userWxSessKey) {
@@ -72,6 +72,6 @@ module.exports = async function ({
     })
   }
   // 更新redis
-  await luban.cache.setEx(`${wxAppId}_luban_${dd.openId}`, JSON.stringify(dd), 7 * 24 * 3600)
+  await luban.cache.setEx(`${wxAppId}_luban_${dd.openId}`, dd, 7 * 24 * 3600)
   return luban.utils.resp(dd)
 }

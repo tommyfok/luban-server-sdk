@@ -83,14 +83,14 @@ module.exports = async ({
       sessionData.user.id = newUserIdArr[0]
     }
     // 存一下用户信息到缓存，保存一周(暂定，看压力情况)
-    await luban.cache.setEx(userCacheKey, JSON.stringify(sessionData.user), 7 * 24 * 3600)
+    await luban.cache.setEx(userCacheKey, sessionData.user, 7 * 24 * 3600)
   }
 
   // 设置session缓存
   let uuid = uuidv4()
   sessionData.appid = appid
   sessionData.wx_appid = wxAppId
-  await luban.cache.setEx([appid, uuid].join('-'), JSON.stringify(sessionData))
+  await luban.cache.setEx([appid, uuid].join('-'), sessionData)
 
   // 删除敏感数据，输出session信息
   delete sessionData.access_token

@@ -31,11 +31,11 @@ module.exports = async function ({
     data.appid = appid
     data.wx_appid = wxAppId
     // 设置session缓存
-    await luban.cache.setEx([appid, uuid].join('-'), JSON.stringify(data))
+    await luban.cache.setEx([appid, uuid].join('-'), data)
     let userKey = `${wxAppId}_luban_${data.openid}`
     try {
       // 首先从redis里面查用户信息
-      data.user = JSON.parse(await luban.cache.get(userKey))
+      data.user = await luban.cache.get(userKey)
     } catch (e) {}
     if (!data.user) {
       // redis里面没有数据，从db里面查
@@ -68,7 +68,7 @@ module.exports = async function ({
         data.user.id = newUserIdArr[0]
       }
       // 保存用户信息到redis，暂存一周
-      await luban.cache.setEx(userKey, JSON.stringify(data.user), 7 * 24 * 3600)
+      await luban.cache.setEx(userKey, data.user, 7 * 24 * 3600)
     }
 
     // 删除session_key，用lubansessionkey替换后再输出
