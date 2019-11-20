@@ -44,7 +44,7 @@ module.exports = async ({
         openid: data.openid
       }))[0]
       try {
-        data.user = JSON.parse((await luban.db.sys('luban_qq_user_detail').where('id', user.detail_id))[0]).detail
+        data.user = JSON.parse((await luban.db.sys('luban_qq_user_detail').where('id', user.detail_id))[0].detail)
         data.user.id = user.id
       } catch (e) {}
       // 如果还是没有data.user，那就把用户存到db里面
